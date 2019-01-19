@@ -10,6 +10,10 @@ from torch.multiprocessing import Pipe, Process
 from model import *
 from PIL import Image
 
+import matplotlib.pyplot as plt
+from IPython import display as ipythondisplay
+from pyvirtualdisplay import Display
+
 class MaxAndSkipEnv(gym.Wrapper):
     def __init__(self, env, is_render, skip=4):
         """Return only every `skip`-th frame"""
@@ -25,6 +29,9 @@ class MaxAndSkipEnv(gym.Wrapper):
         done = None
         for i in range(self._skip):
             obs, reward, done, info = self.env.step(action)
+            prev_screen = env.render(mode='rgb_array')
+            plt.imshow(prev_screen)
+            
             if self.is_render:
                 self.env.render()
             if i == self._skip - 2: self._obs_buffer[0] = obs
