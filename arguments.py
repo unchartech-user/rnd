@@ -41,7 +41,7 @@ def get_args():
                         help='entropy term coefficient (default: 2.)')
     parser.add_argument('--int-coef', type=float, default=1.,
                         help='entropy term coefficient (default: 1.)')
-    parser.add_argument('--max-episode-steps', type=int, default=1800000s,
+    parser.add_argument('--max-episode-steps', type=int, default=1800000,
                         help='Maximum steps per episode (default: 18000)')
     parser.add_argument('--pre-obs-norm-steps', type=int, default=50,
                         help='Number of steps for pre-normalization (default: 50)')
