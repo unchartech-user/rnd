@@ -40,7 +40,7 @@ class MaxAndSkipEnv(gym.Wrapper):
 
     def reset(self, **kwargs):
         return self.env.reset(**kwargs)
-        
+
 
 class MontezumaInfoWrapper(gym.Wrapper):
     def __init__(self, env, room_address):
@@ -148,9 +148,9 @@ class AtariEnvironment(Process):
                 self.recent_rlist.append(self.rall)
                 if 'Montezuma' in self.env_name:
                     print("[Episode {}({})] Step: {}  Reward: {}  Recent Reward: {}  Visited Room: [{}]".format(
-                        self.episode, self.env_idx, self.steps, self.rall, np.mean(self.recent_rlist),
+                        self.episode , self.env_idx, self.steps, self.rall, np.mean(self.recent_rlist),
                         info.get('episode', {}).get('visited_rooms', {})))
-                else:    
+                else:
                     print("[Episode {}({})] Step: {}  Reward: {}  Recent Reward: {}".format(
                         self.episode, self.env_idx, self.steps, self.rall, np.mean(self.recent_rlist)))
 
@@ -161,7 +161,6 @@ class AtariEnvironment(Process):
 
     def reset(self):
         self.last_action = 0
-        self.steps = 0
         self.episode += 1
         self.rall = 0
         s = self.env.reset()
