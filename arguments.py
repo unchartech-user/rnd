@@ -28,7 +28,7 @@ def get_args():
     parser.add_argument('--use-noisy-net', action='store_true', default=False,
                         help='Use NoisyNet (default: False)')
     parser.add_argument('--no-sticky-action', action='store_true', default=False,
-                        help='Use Sticky Action (default: True)')    
+                        help='Use Sticky Action (default: True)')
     parser.add_argument("--sticky-action-prob", type=float, default=0.25,
                         help="Action probability (default: 0.25")
     parser.add_argument('--epoch', type=int, default=4,
@@ -38,9 +38,9 @@ def get_args():
     parser.add_argument('--entropy-coef', type=float, default=0.001,
                         help='entropy term coefficient (default: 0.001)')
     parser.add_argument('--ext-coef', type=float, default=2.,
-                        help='entropy term coefficient (default: 2.)')    
+                        help='entropy term coefficient (default: 2.)')
     parser.add_argument('--int-coef', type=float, default=1.,
-                        help='entropy term coefficient (default: 1.)')  
+                        help='entropy term coefficient (default: 1.)')
     parser.add_argument('--max-episode-steps', type=int, default=18000,
                         help='Maximum steps per episode (default: 18000)')
     parser.add_argument('--pre-obs-norm-steps', type=int, default=50,
@@ -56,7 +56,7 @@ def get_args():
     parser.add_argument('--recurrent-policy', action='store_true', default=False,
                         help='Use a recurrent policy')
 
-    parser.add_argument('--env-name', default='MontezumaRevengeNoFrameskip-v4',
+    parser.add_argument('--env-name', default='PongNoFrameskip-v4',
                         help='Environment to train on (default: MontezumaRevengeNoFrameskip-v4)')
 
     args = parser.parse_args()
