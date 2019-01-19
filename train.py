@@ -122,7 +122,7 @@ def train_model(args, device, output_size, model, rnd, optimizer, s_batch, targe
             optimizer.zero_grad()
             loss = actor_loss + 0.5 * critic_loss - args.entropy_coef * entropy + forward_loss
             loss.backward()
-            global_grad_norm_(list(self.model.parameters())+list(self.rnd.predictor.parameters()))
+            global_grad_norm_(list(model.parameters())+list(rnd.predictor.parameters()))
             optimizer.step()
 
 
@@ -145,7 +145,7 @@ def main():
 	    os.makedirs(args.save_dir)
     model_path = os.path.join(args.save_dir, args.env_name + '.model')
     predictor_path = os.path.join(args.save_dir, args.env_name + '.pred')
-    target_path = os.path.join(args.save_dir, args.env_name + '.target')    
+    target_path = os.path.join(args.save_dir, args.env_name + '.target')
 
     writer = SummaryWriter(log_dir=args.log_dir)
 
@@ -158,7 +158,7 @@ def main():
     model = model.to(device)
     rnd = rnd.to(device)
     optimizer = optim.Adam(list(model.parameters()) + list(rnd.predictor.parameters()), lr=args.lr)
-   
+
     if args.load_model:
         if args.cuda:
             model.load_state_dict(torch.load(model_path))
@@ -172,10 +172,10 @@ def main():
         parent_conn, child_conn = Pipe()
         work = AtariEnvironment(
         	args.env_name,
-            is_render, 
-        	idx, 
-        	child_conn, 
-        	sticky_action=args.sticky_action, 
+            is_render,
+        	idx,
+        	child_conn,
+        	sticky_action=args.sticky_action,
         	p=args.sticky_action_prob,
         	max_episode_steps=args.max_episode_steps)
         work.start()
@@ -241,7 +241,7 @@ def main():
             next_obs = np.stack(next_obs)
 
             # total reward = int reward + ext Reward
-            intrinsic_reward = compute_intrinsic_reward(rnd, device, 
+            intrinsic_reward = compute_intrinsic_reward(rnd, device,
                 ((next_obs - obs_rms.mean) / np.sqrt(obs_rms.var)).clip(-5, 5))
             intrinsic_reward = np.hstack(intrinsic_reward)
             sample_i_rall += intrinsic_reward[sample_env_index]
@@ -332,7 +332,7 @@ def main():
         # -----------------------------------------------
 
         # Step 5. Training!
-        train_model(args, device, output_size, model, rnd, optimizer, 
+        train_model(args, device, output_size, model, rnd, optimizer,
                         np.float32(total_state) / 255., ext_target, int_target, total_action,
                         total_adv, ((total_next_obs - obs_rms.mean) / np.sqrt(obs_rms.var)).clip(-5, 5),
                         total_action_probs)
