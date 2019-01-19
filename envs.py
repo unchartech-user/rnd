@@ -29,9 +29,7 @@ class MaxAndSkipEnv(gym.Wrapper):
         done = None
         for i in range(self._skip):
             obs, reward, done, info = self.env.step(action)
-            prev_screen = self.env.render(mode='rgb_array')
-            plt.imshow(prev_screen)
-            
+
             if self.is_render:
                 self.env.render()
             if i == self._skip - 2: self._obs_buffer[0] = obs
